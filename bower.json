@@ -1,0 +1,30 @@
+{
+  "name": "cgo-tag",
+  "version": "2.1.1",
+  "homepage": "https://github.com/racerxdl/cgo-tag",
+  "authors": [
+    "Lucas Teske"
+  ],
+  "description": "Yuneec CGO3 Image Tagging",
+  "keywords": [
+    "exif",
+    "cgo",
+    "yuneec",
+    "geotag",
+    "tag"
+  ],
+  "dependencies" : {
+    "jquery"  : "*",
+    "moment"  : "*"
+  },
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "spec",
+    "example"
+  ]
+}

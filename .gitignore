@@ -1,0 +1,6 @@
+3rdparty
+3rdparty/*
+node_modules
+node_modules/*
+dist
+dist/*

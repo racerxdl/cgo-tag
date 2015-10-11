@@ -1,0 +1,36 @@
+<html>
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+  <title>CGO Tag</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <style>
+      body {
+        /*background:#000000;*/
+        padding:0;
+        margin:0;
+        font-weight: bold;
+      }
+      #drop_zone {
+        width: 400px;
+        height: 200px;
+        border: 2px;
+        border-style: dashed;
+      }
+      #map {
+        width: 500px;
+        height: 400px;
+      }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="dist/cgo-tag.min.js"></script>
+</head>
+<body onload="init();">
+<center>
+<BR><BR><BR>
+    <div id="drop_zone"><BR><BR>Thrown here</div>
+    <div id="data"></div>
+    <output id="list"></output>
+    <div id="map"></div>
+</center>
+</body>
+</html>
