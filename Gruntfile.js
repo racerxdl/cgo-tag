@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     concat: {
       dist: {
-        src: [ "js/*.js" , "3rdparty/jquery/dist/jquery.min.js", "node_modules/piexifjs/piexif.js", "3rdparty/moment/moment.js"],
+        src: ["3rdparty/jquery/dist/jquery.min.js", "node_modules/piexifjs/piexif.js", "3rdparty/moment/moment.js",  "lib/*.js" ],
         dest: "dist/cgo-tag.min.js"
       }
     },
@@ -49,14 +49,14 @@ module.exports = function(grunt) {
 
     watch: {
       dev: {
-        files: [ "Gruntfile.js", "js/*.js", "3rdparty/jquery/dist/jquery.min.js", "node_modules/piexifjs/piexif.js", "3rdparty/moment/moment.js" ],
+        files: [ "Gruntfile.js", "lib/*.js", "3rdparty/jquery/dist/jquery.min.js", "node_modules/piexifjs/piexif.js", "3rdparty/moment/moment.js" ],
         tasks: [ "jshint", "concat:dist", "clean:temp" ],
         options: {
           atBegin: true
         }
       },
       min: {
-        files: [ "Gruntfile.js", "js/*.js", "3rdparty/jquery/dist/jquery.min.js", "node_modules/piexifjs/piexif.js", "3rdparty/moment/moment.js"],
+        files: [ "Gruntfile.js", "lib/*.js", "3rdparty/jquery/dist/jquery.min.js", "node_modules/piexifjs/piexif.js", "3rdparty/moment/moment.js"],
         tasks: [ "jshint", "concat:dist", "clean:temp", "uglify:dist" ],
         options: {
           atBegin: true
