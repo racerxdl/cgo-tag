@@ -1,43 +1,42 @@
 (function () {
   'use strict';
-
-  cgotag.coordToWGS84 = function(coord) {
+  var coordToWGS84 = function(coord) {
     var wgs_coord = {
-      "latRef" : coord.lat > 0 ? "N" : "S",
-      "lat" : [[Math.floor(Math.abs(coord.lat)),1]],
-      "lonRef" : coord.lon > 0 ? "E" : "W",
-      "lon": [[Math.floor(Math.abs(coord.lon)),1]],
-      "altRef" : 0,
-      "alt" : [coord.alt, 1]
+      "latitudeRef" : coord.latitude > 0 ? "N" : "S",
+      "latitude" : [[Math.floor(Math.abs(coord.latitude)),1]],
+      "longitudeRef" : coord.longitude > 0 ? "E" : "W",
+      "longitude": [[Math.floor(Math.abs(coord.longitude)),1]],
+      "altitudeRef" : 0,
+      "altitude" : [coord.altitude, 1]
     };
 
-    var tmp = (Math.abs(coord.lat) - wgs_coord.lat[0][0]) * 60;
+    var tmp = (Math.abs(coord.latitude) - wgs_coord.latitude[0][0]) * 60;
 
-    wgs_coord.lat.push( 
+    wgs_coord.latitude.push( 
       [
         Math.floor(tmp),
         1
       ]
     );
 
-    wgs_coord.lat.push(
+    wgs_coord.latitude.push(
       [
-        Math.floor( (tmp - wgs_coord.lat[1][0]) * 6000 ),
+        Math.floor( (tmp - wgs_coord.latitude[1][0]) * 6000 ),
         100
       ]
     );
 
-    tmp = (Math.abs(coord.lon) - wgs_coord.lon[0][0]) * 60;
-    wgs_coord.lon.push( 
+    tmp = (Math.abs(coord.longitude) - wgs_coord.longitude[0][0]) * 60;
+    wgs_coord.longitude.push( 
       [
         Math.floor(tmp),
         1
       ]
     );
 
-    wgs_coord.lon.push(
+    wgs_coord.longitude.push(
       [
-        Math.floor( (tmp - wgs_coord.lon[1][0]) * 6000 ),
+        Math.floor( (tmp - wgs_coord.longitude[1][0]) * 6000 ),
         100
       ]
     );
@@ -45,26 +44,8 @@
     return wgs_coord;
   };
 
-  cgotag.checkCoord = function(time, a, b) {
-    if (time.isSame(a.time))
-      return a;
 
-    if (time.isSame(b.time))
-      return b;
-
-    if (time.isAfter(a.time) && time.isBefore(b.time)) {
-      var newgps = JSON.parse(JSON.stringify(a));
-      newgps.time = time;
-      newgps.lat = ( a.lat + b.lat ) / 2;
-      newgps.lon = ( a.lon + b.lon ) / 2;
-      newgps.alt = ( a.alt + b.alt ) / 2;
-      newgps.speed = ( a.speed + b.speed ) / 2;
-      return newgps;
-    }
-    return null;
-  };
-
-  cgotag.addLines = function(lines) {
+  var addLines = function(lines) {
     var path  = [];
 
     var max = { lat: null, lng: null }; 
@@ -72,15 +53,15 @@
 
     for (var i in lines) {
       path.push({
-        lat: lines[i].lat,
-        lng: lines[i].lon
+        lat: lines[i].latitude,
+        lng: lines[i].longitude
       });
 
-      max.lat = max.lat === null ? lines[i].lat : Math.max(max.lat, lines[i].lat);
-      max.lng = max.lng === null ? lines[i].lon : Math.max(max.lng, lines[i].lon);
+      max.lat = max.lat === null ? lines[i].latitude : Math.max(max.lat, lines[i].latitude);
+      max.lng = max.lng === null ? lines[i].longitude : Math.max(max.lng, lines[i].longitude);
 
-      min.lat = min.lat === null ? lines[i].lat : Math.min(min.lat, lines[i].lat);
-      min.lng = min.lng === null ? lines[i].lon : Math.min(min.lng, lines[i].lon);
+      min.lat = min.lat === null ? lines[i].latitude : Math.min(min.lat, lines[i].latitude);
+      min.lng = min.lng === null ? lines[i].longitude : Math.min(min.lng, lines[i].longitude);
     }
 
     var flightPath = new google.maps.Polyline({
@@ -103,4 +84,11 @@
     });
   };
 
+  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+    module.exports.cgotag.coordToWGS84 = coordToWGS84;
+    // No add lines for nodejs
+  } else {
+    cgotag.coordToWGS84 = coordToWGS84;
+    cgotag.addLines = addLines;
+  }
 }());
